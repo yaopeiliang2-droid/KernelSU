@@ -8,9 +8,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Clone KernelSU
-        run: |
-          git clone https://github.com/tiann/KernelSU.git
+        run: git clone https://github.com/tiann/KernelSU.git
 
       - name: Setup Java
         uses: actions/setup-java@v3
@@ -18,13 +20,13 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - name: Build Manager
+      - name: Build
         run: |
           cd KernelSU
           chmod +x gradlew
           ./gradlew :manager:assembleRelease
 
-      - name: Upload APK
+      - name: Upload
         uses: actions/upload-artifact@v3
         with:
           name: KernelSU_Manager
